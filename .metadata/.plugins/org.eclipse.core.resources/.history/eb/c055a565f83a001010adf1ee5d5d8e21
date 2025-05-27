@@ -1,0 +1,38 @@
+package com.payflow.payflow.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.payflow.payflow.dao.ContactTypeDao;
+import com.payflow.payflow.dto.ResponseStructure;
+import com.payflow.payflow.entity.ContactType;
+
+@Service
+public class ContactTypeService {
+	@Autowired
+	private ContactTypeDao contactTypeDao;
+	
+	public ResponseEntity<ResponseStructure<ContactType>> addContactType(ContactType contactType){
+		ContactType contactType2=contactTypeDao.addContactType(contactType);
+		
+		ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+		responseStructure.setStatus(true);
+		responseStructure.setMessage("Contact Type added successfully");
+		responseStructure.setData(contactType2);
+		
+		return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure,HttpStatus.CREATED);
+	}
+	
+	public ResponseEntity<ResponseStructure<ContactType>> getContactType(Long contactTypeId){
+		ContactType contactType=contactTypeDao.getContactType(contactTypeId);
+		
+		ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+		responseStructure.setStatus(true);
+		responseStructure.setMessage("Contact Type detail fetched successfully");
+		responseStructure.setData(contactType);
+		
+		return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure,HttpStatus.OK);
+	}
+}

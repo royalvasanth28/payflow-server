@@ -1,0 +1,18 @@
+package com.payflow.payflow.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.payflow.payflow.entity.Contact;
+import com.payflow.payflow.repository.ContactRepository;
+
+@Repository
+public class ContactDao {
+	
+	@Autowired
+	private ContactRepository contactRepository;
+	
+	public Contact addContact(Contact contact) {
+		return contact
+	}
+}

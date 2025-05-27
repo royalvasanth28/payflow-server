@@ -1,0 +1,20 @@
+package com.payflow.payflow.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.payflow.payflow.dto.ResponseStructure;
+import com.payflow.payflow.entity.Contact;
+import com.payflow.payflow.service.ContactService;
+
+@RestController
+public class ContactController {
+
+	@Autowired
+	private ContactService contactService;
+	
+	public ResponseEntity<ResponseStructure<Contact>> addContact(Contact contact){
+		return contactService.addContact(contact);
+	}
+}

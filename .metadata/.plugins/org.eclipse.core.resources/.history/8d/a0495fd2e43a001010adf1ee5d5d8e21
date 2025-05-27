@@ -1,0 +1,19 @@
+package com.payflow.payflow.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.payflow.payflow.dao.ContactTypeDao;
+import com.payflow.payflow.dto.ResponseStructure;
+import com.payflow.payflow.entity.ContactType;
+
+@Service
+public class ContactTypeService {
+	@Autowired
+	private ContactTypeDao contactTypeDao;
+	
+	public ResponseEntity<ResponseStructure<ContactType>> addContactType(ContactType contactType){
+		contactTypeDao.a
+	}
+}

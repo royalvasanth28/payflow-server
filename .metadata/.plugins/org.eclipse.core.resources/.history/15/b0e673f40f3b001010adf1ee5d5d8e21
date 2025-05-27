@@ -1,0 +1,13 @@
+package com.payflow.payflow.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.payflow.payflow.dao.ContactDao;
+
+@Service
+public class ContactService {
+
+	@Autowired
+	private ContactDao contactDao;
+}

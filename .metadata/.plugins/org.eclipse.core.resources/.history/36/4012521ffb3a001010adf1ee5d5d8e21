@@ -1,0 +1,8 @@
+package com.payflow.payflow.exception;
+
+public class Snippet {
+	ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+			responseStructure.setStatus(true);
+			responseStructure.setMessage("Contact Type List fetched successfully");
+}
+

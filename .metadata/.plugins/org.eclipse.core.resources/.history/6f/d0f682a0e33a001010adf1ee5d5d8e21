@@ -1,0 +1,5 @@
+package com.payflow.payflow.service;
+
+public class ContactTypeService {
+
+}
