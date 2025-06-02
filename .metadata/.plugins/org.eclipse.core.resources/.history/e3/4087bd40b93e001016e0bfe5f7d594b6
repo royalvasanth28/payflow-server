@@ -1,0 +1,120 @@
+package com.payflow.payflow.entity;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "h_contact_types")
+public class ContactType {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "contact_type_id",columnDefinition = "BIGINT UNSIGNED")
+	private Long contactTypeId;
+	@Column(name = "contact_type_name")
+	private String contactTypeName; 
+	@Column(name = "contact_type_code")
+	private String contactTypeCode;
+	@Column(name = "contact_nature")
+	private String contactNature;
+	@Column(name = "created_by")
+	private Integer createdBy;
+	@Column(name = "updated_by")
+	private Integer updatedBy;
+	@Column(name = "created_at",columnDefinition = "DATETIME")
+	private LocalDateTime createdAt;
+	@Column(name = "updated_at",columnDefinition = "DATETIME")
+	private LocalDateTime updatedAt;
+	
+	@OneToMany(mappedBy = "contactType",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@JsonManagedReference
+	private List<Contact> contacts;
+
+	public Long getContactTypeId() {
+		return contactTypeId;
+	}
+
+	public void setContactTypeId(Long contactTypeId) {
+		this.contactTypeId = contactTypeId;
+	}
+
+	public String getContactTypeName() {
+		return contactTypeName;
+	}
+
+	public void setContactTypeName(String contactTypeName) {
+		this.contactTypeName = contactTypeName;
+	}
+
+	public String getContactTypeCode() {
+		return contactTypeCode;
+	}
+
+	public void setContactTypeCode(String contactTypeCode) {
+		this.contactTypeCode = contactTypeCode;
+	}
+
+	public String getContactNature() {
+		return contactNature;
+	}
+
+	public void setContactNature(String contactNature) {
+		this.contactNature = contactNature;
+	}
+
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Integer getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Integer updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public List<Contact> getContacts() {
+		return contacts;
+	}
+
+	public void setContacts(List<Contact> contacts) {
+		this.contacts = contacts;
+	}
+	
+	
+	
+	
+	
+}

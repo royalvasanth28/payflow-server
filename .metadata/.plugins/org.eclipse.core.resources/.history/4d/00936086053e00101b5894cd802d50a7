@@ -1,0 +1,77 @@
+package com.payflow.payflow.dao;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.payflow.payflow.entity.Contact;
+import com.payflow.payflow.exception.ResourceNotFoundException;
+import com.payflow.payflow.repository.ContactRepository;
+
+@Repository
+public class ContactDao {
+	
+	@Autowired
+	private ContactRepository contactRepository;
+	
+	public Contact addContact(Contact contact) {
+		contact.setCreatedAt(LocalDateTime.now());
+		return contactRepository.save(contact);
+	}
+	
+	public Contact getContactById(Long contactId) {
+		Optional<Contact> optional=contactRepository.findById(contactId);
+		if(optional.isPresent()) {
+			return optional.get();
+		}else {
+			return null;
+		}
+	}
+	
+	public List<Contact> getAllContact() {
+		return contactRepository.findAll();
+	}
+	
+	public Contact updateContact(Contact contact) {
+		Optional<Contact> optional=contactRepository.findById(contact.getContactId());
+		if(optional.isPresent()) {
+			Contact existContact=optional.get();
+			
+			existContact.setName(contact.getName());
+			existContact.setEmail(contact.getEmail());
+			existContact.setPhone(contact.getPhone());
+			existContact.setWebsite(contact.getWebsite());
+			existContact.setStatus(contact.getStatus());
+			existContact.setFacebook(contact.getFacebook());
+			existContact.setNotes(contact.getNotes());
+			existContact.setGst(contact.getGst());
+			existContact.setImageId(contact.getImageId());
+			existContact.setDueListing(contact.getDueListing());
+			existContact.setCreatedBy(contact.getCreatedBy());
+			existContact.setUpdatedBy(contact.getUpdatedBy());
+			existContact.setUpdatedAt(LocalDateTime.now());
+			existContact.setDeletedAt(contact.getDeletedAt());
+			existContact.setContactType(contact.getContactType());
+			
+			
+			return contactRepository.save(existContact);
+		}else {
+			return null;
+		}
+	}
+	
+	public Contact deleteContact(Long contactId) {
+		Optional<Contact> optional=contactRepository.findByIdAndDeletedAtIsNull(contactId);
+		if(!optional.isPresent()) {
+			throw new ResourceNotFoundException("Contact not found or already deleted with id: " + contactId);
+		}else {
+			Contact contact = optional.get();
+			contact.setDeletedAt(LocalDateTime.now());
+			return contactRepository.save(contact);
+		}
+	}
+	
+}

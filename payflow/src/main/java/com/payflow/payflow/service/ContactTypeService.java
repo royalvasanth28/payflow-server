@@ -18,13 +18,13 @@ public class ContactTypeService {
 	@Autowired
 	private ContactTypeDao contactTypeDao;
 
-	public ResponseEntity<ResponseStructure<ContactType>> addContactType(ContactType contactType) {
-		ContactType contactType2 = contactTypeDao.addContactType(contactType);
+	public ResponseEntity<ResponseStructure<ContactType>> addContactType(ContactType contactType,Long id) {
+		ContactType addContactType = contactTypeDao.addContactType(contactType,id);
 
 		ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
 		responseStructure.setStatus(true);
 		responseStructure.setMessage("Contact Type added successfully");
-		responseStructure.setData(contactType2);
+		responseStructure.setData(addContactType);
 
 		return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure, HttpStatus.CREATED);
 	}
@@ -53,12 +53,12 @@ public class ContactTypeService {
 
 			return new ResponseEntity<ResponseStructure<List<ContactType>>>(responseStructure, HttpStatus.OK);
 		} else {
-			throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException("Contact Type not found");
 		}
 	}
 
-	public ResponseEntity<ResponseStructure<ContactType>> updateContactType(ContactType contactType){
-		ContactType UpdatecontactType=contactTypeDao.updateContactType(contactType);
+	public ResponseEntity<ResponseStructure<ContactType>> updateContactType(ContactType contactType,Long id){
+		ContactType UpdatecontactType=contactTypeDao.updateContactType(contactType,id);
 		if(UpdatecontactType!=null) {
 			ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
 			responseStructure.setStatus(true);
@@ -72,7 +72,7 @@ public class ContactTypeService {
 	}
 	
 	public ResponseEntity<ResponseStructure<ContactType>> deleteContactType(Long contactTypeId){
-		ContactType contactType=contactTypeDao.deleteContactTye(contactTypeId);
+		ContactType contactType=contactTypeDao.deleteContactType(contactTypeId);
 		ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
 		
 		if(contactType!= null) {

@@ -1,0 +1,63 @@
+package com.payflow.payflow.dao;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.payflow.payflow.entity.ContactType;
+import com.payflow.payflow.repository.ContactTypeRepository;
+
+@Repository
+public class ContactTypeDao {
+	
+	@Autowired
+	private ContactTypeRepository contactTypeRepository;
+	
+	public ContactType addContactType(ContactType contactType) {
+	    return contactTypeRepository.save(contactType);
+	}
+	
+	public ContactType getContactTypeById(Long contactTypeId) {
+		Optional<ContactType> optional =contactTypeRepository.findById(contactTypeId);
+		if(optional.isPresent()) {
+			return optional.get();
+		}else {
+			return null;
+		}
+	}
+	
+	public List<ContactType> getAllContactType(){
+		return contactTypeRepository.findAll();
+	}
+	
+	public ContactType updateContactType(ContactType contactType) {
+		Optional<ContactType> optional=contactTypeRepository.findById(contactType.getContactTypeId());
+		if(optional.isPresent()) {
+			ContactType existingContactType=optional.get();
+			
+			existingContactType.setContactTypeName(contactType.getContactTypeName());
+			existingContactType.setContactTypeCode(contactType.getContactTypeCode());
+			existingContactType.setContactNature(contactType.getContactNature());
+			existingContactType.setCreatedBy(contactType.getCreatedBy());
+			existingContactType.setUpdatedBy(contactType.getUpdatedBy());
+			existingContactType.setCreatedAt(contactType.getCreatedAt());
+			existingContactType.setUpdatedAt(contactType.getUpdatedAt());
+			return contactTypeRepository.save(existingContactType);
+		}else {
+			return null;
+		}
+	}
+	
+	public ContactType deleteContactTye(Long contactTypeId) {
+		Optional<ContactType> optional=contactTypeRepository.findById(contactTypeId);
+		if(optional.isPresent()) {
+			contactTypeRepository.delete(optional.get());
+			return optional.get();
+		}else {
+			return null;
+		}
+	}
+	
+}

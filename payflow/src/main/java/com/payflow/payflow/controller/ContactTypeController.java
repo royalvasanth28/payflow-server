@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payflow.payflow.dto.ResponseStructure;
@@ -25,8 +26,8 @@ public class ContactTypeController {
 	private ContactTypeService contactTypeService;
 	
 	@PostMapping
-	public ResponseEntity<ResponseStructure<ContactType>> addContactType(@RequestBody ContactType contactType){
-		return contactTypeService.addContactType(contactType);
+	public ResponseEntity<ResponseStructure<ContactType>> addContactType(@RequestBody ContactType contactType,@RequestParam Long id){
+		return contactTypeService.addContactType(contactType,id);
 	}
 	
 	@GetMapping("/{contactTypeId}")
@@ -40,8 +41,8 @@ public class ContactTypeController {
 	}
 	
 	@PutMapping
-	public ResponseEntity<ResponseStructure<ContactType>> updateContactType(@RequestBody ContactType contactType){
-		return contactTypeService.updateContactType(contactType);
+	public ResponseEntity<ResponseStructure<ContactType>> updateContactType(@RequestBody ContactType contactType,@RequestParam Long id){
+		return contactTypeService.updateContactType(contactType,id);
 	}
 	
 	@DeleteMapping("/id/{contactTypeId}")

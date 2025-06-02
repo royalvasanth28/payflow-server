@@ -3,6 +3,8 @@ package com.payflow.payflow.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -36,6 +38,7 @@ public class ContactType {
 	private LocalDateTime updatedAt;
 	
 	@OneToMany(mappedBy = "contactType",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
+	@JsonManagedReference
 	private List<Contact> contacts;
 
 	public Long getContactTypeId() {
@@ -109,9 +112,5 @@ public class ContactType {
 	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
 	}
-	
-	
-	
-	
-	
+
 }

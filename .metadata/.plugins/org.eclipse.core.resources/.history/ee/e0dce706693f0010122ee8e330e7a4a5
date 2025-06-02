@@ -1,0 +1,92 @@
+package com.payflow.payflow.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.payflow.payflow.dao.ContactTypeDao;
+import com.payflow.payflow.dao.UserDao;
+import com.payflow.payflow.dto.ResponseStructure;
+import com.payflow.payflow.entity.ContactType;
+import com.payflow.payflow.entity.User;
+import com.payflow.payflow.exception.IdNotFoundException;
+import com.payflow.payflow.exception.ResourceNotFoundException;
+
+@Service
+public class ContactTypeService {
+	@Autowired
+	private ContactTypeDao contactTypeDao;
+	
+	@Autowired
+	private UserDao userDao;
+
+	public ResponseEntity<ResponseStructure<ContactType>> addContactType(ContactType contactType,Long id) {
+		ContactType addContactType = contactTypeDao.addContactType(contactType,id);
+
+		ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+		responseStructure.setStatus(true);
+		responseStructure.setMessage("Contact Type added successfully");
+		responseStructure.setData(addContactType);
+
+		return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure, HttpStatus.CREATED);
+	}
+
+	public ResponseEntity<ResponseStructure<ContactType>> getContactType(Long contactTypeId) {
+		ContactType contactType = contactTypeDao.getContactTypeById(contactTypeId);
+		if (contactType != null) {
+			ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+			responseStructure.setStatus(true);
+			responseStructure.setMessage("Contact Type detail fetched successfully");
+			responseStructure.setData(contactType);
+
+			return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure, HttpStatus.OK);
+		} else {
+			throw new IdNotFoundException();
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<List<ContactType>>> getAllContactType() {
+		List<ContactType> contactTypes = contactTypeDao.getAllContactType();
+		ResponseStructure<List<ContactType>> responseStructure = new ResponseStructure<List<ContactType>>();
+		if (contactTypes.size() > 0) {
+			responseStructure.setStatus(true);
+			responseStructure.setMessage("Contact Type List fetched successfully");
+			responseStructure.setData(contactTypes);
+
+			return new ResponseEntity<ResponseStructure<List<ContactType>>>(responseStructure, HttpStatus.OK);
+		} else {
+			throw new ResourceNotFoundException("Contact Type not found");
+		}
+	}
+
+	public ResponseEntity<ResponseStructure<ContactType>> updateContactType(ContactType contactType){
+		ContactType UpdatecontactType=contactTypeDao.updateContactType(contactType);
+		if(UpdatecontactType!=null) {
+			ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+			responseStructure.setStatus(true);
+			responseStructure.setMessage("Contact Type updated successfully");
+			responseStructure.setData(UpdatecontactType);
+			
+			return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure,HttpStatus.OK);
+		}else {
+			throw new IdNotFoundException();	
+		}
+	}
+	
+	public ResponseEntity<ResponseStructure<ContactType>> deleteContactType(Long contactTypeId){
+		ContactType contactType=contactTypeDao.deleteContactType(contactTypeId);
+		ResponseStructure<ContactType> responseStructure = new ResponseStructure<ContactType>();
+		
+		if(contactType!= null) {
+			responseStructure.setStatus(true);
+			responseStructure.setMessage("Contact type deleted successfully");
+			responseStructure.setData(contactType);
+			return new ResponseEntity<ResponseStructure<ContactType>>(responseStructure,HttpStatus.OK);
+		}else {
+			throw new IdNotFoundException();
+		}
+	}
+}

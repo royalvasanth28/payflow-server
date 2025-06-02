@@ -1,0 +1,28 @@
+package com.payflow.payflow.dao;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.payflow.payflow.entity.User;
+import com.payflow.payflow.repository.UserRepository;
+
+@Repository
+public class UserDao {
+	@Autowired
+	private UserRepository userRepository;
+	
+	public User saveUser(User user) {
+		user.setCreatedAt(LocalDateTime.now());
+		user.setEmailVerifiedAt(LocalDateTime.now());
+		return userRepository.save(user);
+	}
+	
+	public User getUserById(Long id) {
+		return userRepository.findById(id).orElse(null);
+	}
+	
+	public List<User> getAllUser()
+}

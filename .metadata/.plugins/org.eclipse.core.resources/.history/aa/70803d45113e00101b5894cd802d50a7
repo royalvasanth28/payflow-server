@@ -1,0 +1,20 @@
+package com.payflow.payflow.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.payflow.payflow.dto.ResponseStructure;
+import com.payflow.payflow.entity.User;
+import com.payflow.payflow.service.UserService;
+
+@RestController
+public class UserController {
+	
+	@Autowired
+	private UserService userService;
+	
+	public ResponseEntity<ResponseStructure<User>> saveUser(User user){
+		return userService.saveUser(user);
+	}
+}

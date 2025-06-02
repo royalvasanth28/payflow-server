@@ -1,0 +1,27 @@
+package com.payflow.payflow.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.payflow.payflow.dao.UserDao;
+import com.payflow.payflow.dto.ResponseStructure;
+import com.payflow.payflow.entity.User;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserDao userDao;
+	
+	public ResponseEntity<ResponseStructure<User>> saveUser(User user){
+		User saveUser=userDao.saveUser(user);
+		
+		ResponseStructure<User> responseStructure = new ResponseStructure<User>();
+		responseStructure.setStatus(true);
+		responseStructure.setMessage("User Saved Successfully");
+		responseStructure.setData(saveUser);
+		return new ResponseEntity<ResponseStructure<User>>(responseStructure,HttpStatus.CREATED);
+	}
+}

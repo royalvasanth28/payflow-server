@@ -2,6 +2,8 @@ package com.payflow.payflow.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +44,7 @@ public class Contact {
     private LocalDateTime deletedAt;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "contact_type_id",nullable=false,columnDefinition = "BIGINT UNSIGNED")
 	private ContactType contactType;
 
@@ -180,7 +183,5 @@ public class Contact {
 	public void setContactType(ContactType contactType) {
 		this.contactType = contactType;
 	}
-	
-	
 	
 }

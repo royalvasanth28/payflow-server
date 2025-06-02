@@ -1,0 +1,63 @@
+package com.payflow.payflow.dao;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.payflow.payflow.entity.User;
+import com.payflow.payflow.exception.ResourceNotFoundException;
+import com.payflow.payflow.repository.UserRepository;
+
+@Repository
+public class UserDao {
+	@Autowired
+	private UserRepository userRepository;
+	
+	public User saveUser(User user) {
+		user.setCreatedAt(LocalDateTime.now());
+		user.setEmailVerifiedAt(LocalDateTime.now());
+		return userRepository.save(user);
+	}
+	
+	public User getUserById(Long id) {
+		return userRepository.findById(id).orElse(null);
+	}
+	
+	public List<User> getAllUser(){
+		return userRepository.findAll();
+	}
+	
+	public User updateUser(User user) {
+		User existUser = userRepository.findById(user.getId())
+				.orElseThrow(()->new ResourceNotFoundException("User not found with the id : "+user.getId()));
+		
+		existUser.setFirstName(user.getFirstName());
+		existUser.setLastName(user.getLastName());
+		existUser.setEmail(user.getEmail());
+		existUser.setPassword(user.getPassword());
+		existUser.setImageId(user.getImageId());
+		existUser.setRememberToken(user.getRememberToken());
+		existUser.setUpdatedAt(LocalDateTime.now());
+		
+		return userRepository.save(existUser);
+	}
+	
+	public User deleteUser(Long id) {
+		User user= userRepository.findById(id)
+				.orElseThrow(()-> new ResourceNotFoundException("The user with ID : "+id+" has been deleted or does not exist in the database."));
+		userRepository.delete(user);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}

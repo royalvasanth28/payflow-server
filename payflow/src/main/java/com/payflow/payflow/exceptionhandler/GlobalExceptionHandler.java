@@ -12,21 +12,22 @@ import com.payflow.payflow.exception.ResourceNotFoundException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 	@ExceptionHandler(IdNotFoundException.class)
-	public ResponseEntity<ResponseStructure<String>> handleIdNotFoundException(IdNotFoundException exception){
+	public ResponseEntity<ResponseStructure<String>> handleIdNotFoundException(IdNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		responseStructure.setStatus(false);
 		responseStructure.setMessage("The given Id information was not found");
 		responseStructure.setData(exception.getMessage());
-		
-		return new ResponseEntity<ResponseStructure<String>>(responseStructure,HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
-	
-	public ResponseEntity<ResponseStructure<String>> handleResourceNotFoundException(ResourceNotFoundException exception){
+
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ResponseStructure<String>> handleResourceNotFoundException(ResourceNotFoundException exception) {
 		ResponseStructure<String> responseStructure = new ResponseStructure<String>();
 		responseStructure.setStatus(false);
 		responseStructure.setMessage("Requested resource not found");
 		responseStructure.setData(exception.getMessage());
-		
-		return new ResponseEntity<ResponseStructure<String>>(responseStructure,HttpStatus.NOT_FOUND);
+
+		return new ResponseEntity<ResponseStructure<String>>(responseStructure, HttpStatus.NOT_FOUND);
 	}
 }
